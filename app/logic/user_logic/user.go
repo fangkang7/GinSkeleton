@@ -4,7 +4,6 @@ import (
 	"github.com/gin-gonic/gin"
 	perror2 "goskeleton/app/utils/perror"
 	"goskeleton/app/utils/response"
-	"pk-go-api/app/utils/perror"
 )
 
 type User struct {
