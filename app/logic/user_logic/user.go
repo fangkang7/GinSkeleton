@@ -2,13 +2,15 @@ package userlogic
 
 import (
 	"github.com/gin-gonic/gin"
+	perror2 "goskeleton/app/utils/perror"
 	"goskeleton/app/utils/response"
+	"pk-go-api/app/utils/perror"
 )
 
 type User struct {
 }
 
-func (u User) GetUserInfo(c *gin.Context) {
+func (u User) GetUserInfo(c *gin.Context) (*response.SuccessData, perror2.Error) {
 	//myMap := map[string]interface{}{
 	//	"apple":  5,
 	//	"banana": 10,
@@ -17,5 +19,5 @@ func (u User) GetUserInfo(c *gin.Context) {
 
 	mySlice := []int{1, 2, 3, 4}
 	// 这里随便模拟一条数据返回
-	response.Success(c, "ok", mySlice)
+	return response.ReturnSuccessData(mySlice)
 }

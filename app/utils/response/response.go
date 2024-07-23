@@ -5,7 +5,9 @@ import (
 	"github.com/go-playground/validator/v10"
 	"goskeleton/app/global/consts"
 	"goskeleton/app/global/my_errors"
+	"goskeleton/app/global/variable"
 	"goskeleton/app/utils/perror"
+	"goskeleton/app/utils/tool"
 	"goskeleton/app/utils/validator_translation"
 	"net/http"
 	"strings"
@@ -39,6 +41,27 @@ func ReturnError(err perror.Error) (*SuccessData, perror.Error) {
 		Msg:  "请求失败",
 		Data: nil,
 	}, err
+}
+
+func returnJson(Context *gin.Context, httpCode int, dataCode int, msg string, data interface{}) {
+
+	//Context.Header("key2020","value2020")  	//可以根据实际情况在头部添加额外的其他信息
+	Context.JSON(httpCode, gin.H{
+		"code":    dataCode,
+		"msg":     msg,
+		"data":    data,
+		"traceId": Context.GetInt64("traceId"),
+		"env":     tool.StringBuild(variable.ConfigYml.GetString("APPNAME"), "-", variable.ConfigYml.GetString("APPENV")),
+	})
+}
+
+// start 业务一般只使用RequestSuccess 和 RequestFail 方法，因为我们的业务请求的http状态200时前端才会处理
+// RequestSuccess 直接返回成功
+func RequestSuccess(c *gin.Context, d *SuccessData) {
+	returnJson(c, http.StatusOK, d.Code, d.Msg, d.Data)
+	//if d.Code != consts.AuthorizationFaildCode {
+	//	logger.RequestEndLog(c, d.Code, d.Msg, d.Data)
+	//}
 }
 
 func ReturnJson(Context *gin.Context, httpCode int, dataCode int, msg string, data interface{}) {
