@@ -10,6 +10,7 @@ import (
 	"goskeleton/app/utils/tool"
 	"goskeleton/app/utils/validator_translation"
 	"net/http"
+	"pk-go-api/app/utils/logger"
 	"strings"
 )
 
@@ -59,9 +60,28 @@ func returnJson(Context *gin.Context, httpCode int, dataCode int, msg string, da
 // RequestSuccess 直接返回成功
 func RequestSuccess(c *gin.Context, d *SuccessData) {
 	returnJson(c, http.StatusOK, d.Code, d.Msg, d.Data)
-	//if d.Code != consts.AuthorizationFaildCode {
-	//	logger.RequestEndLog(c, d.Code, d.Msg, d.Data)
-	//}
+	if d.Code != consts.AuthorizationFaildCode {
+		//logger.RequestEndLog(c, d.Code, d.Msg, d.Data)
+	}
+}
+
+// RequestFail 报错直接返回
+func RequestFail(c *gin.Context, e perror.Error) {
+	appDebug := variable.ConfigYml.GetBool("AppDebug")
+	var errMsg string
+	if appDebug {
+		errMsg = e.Error()
+	} else {
+		errMsg = e.Msg()
+	}
+	if errMsg == "" {
+		errMsg = "系统错误"
+	}
+	returnJson(c, http.StatusOK, e.Code(), errMsg, nil)
+	if e.Code() != consts.AuthorizationFaildCode {
+		//logger.RequestEndLog(c, e.Code(), e.Error(), nil)
+	}
+	c.Abort()
 }
 
 func ReturnJson(Context *gin.Context, httpCode int, dataCode int, msg string, data interface{}) {

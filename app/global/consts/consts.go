@@ -4,6 +4,10 @@ package consts
 const (
 	// 进程被结束
 	ProcessKilled string = "收到信号，进程被结束"
+	//token
+	AuthorizationFaildCode int    = -10000
+	AuthorizationFaildMsg  string = "token验证失败"
+
 	// 表单验证器前缀
 	ValidatorPrefix              string = "Form_Validator_"
 	ValidatorParamsCheckFailCode int    = -400300
