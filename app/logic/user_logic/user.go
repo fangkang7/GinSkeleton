@@ -16,7 +16,9 @@ func (u User) GetUserInfo(c *gin.Context) (*response.SuccessData, perror2.Error)
 	//	"cherry": 15,
 	//}
 
-	mySlice := []int{1, 2, 3, 4}
+	return response.ReturnError(nil)
+
+	//mySlice := []int{1, 2, 3, 4}
 	// 这里随便模拟一条数据返回
-	return response.ReturnSuccessData(mySlice)
+	//return response.ReturnSuccessData(mySlice)
 }
