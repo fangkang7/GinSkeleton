@@ -6,11 +6,11 @@ import (
 	"goskeleton/app/global/consts"
 	"goskeleton/app/global/my_errors"
 	"goskeleton/app/global/variable"
+	"goskeleton/app/utils/logger"
 	"goskeleton/app/utils/perror"
 	"goskeleton/app/utils/tool"
 	"goskeleton/app/utils/validator_translation"
 	"net/http"
-	//"goskeleton/app/utils/logger"
 	"strings"
 )
 
@@ -61,7 +61,7 @@ func returnJson(Context *gin.Context, httpCode int, dataCode int, msg string, da
 func RequestSuccess(c *gin.Context, d *SuccessData) {
 	returnJson(c, http.StatusOK, d.Code, d.Msg, d.Data)
 	if d.Code != consts.AuthorizationFaildCode {
-		//logger.RequestEndLog(c, d.Code, d.Msg, d.Data)
+		logger.RequestEndLog(c, d.Code, d.Msg, d.Data)
 	}
 }
 
@@ -79,7 +79,7 @@ func RequestFail(c *gin.Context, e perror.Error) {
 	}
 	returnJson(c, http.StatusOK, e.Code(), errMsg, nil)
 	if e.Code() != consts.AuthorizationFaildCode {
-		//logger.RequestEndLog(c, e.Code(), e.Error(), nil)
+		logger.RequestEndLog(c, e.Code(), e.Error(), nil)
 	}
 	c.Abort()
 }

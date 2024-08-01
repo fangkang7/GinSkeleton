@@ -24,6 +24,8 @@ var (
 
 	// 全局日志指针
 	ZapLog *zap.Logger
+	ApiLog *zap.Logger
+
 	// 全局配置文件
 	ConfigYml       ymlconfig_interf.YmlConfigInterf // 全局配置文件指针
 	ConfigGormv2Yml ymlconfig_interf.YmlConfigInterf // 全局配置文件指针
