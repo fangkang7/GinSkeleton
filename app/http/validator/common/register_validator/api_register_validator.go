@@ -20,4 +20,5 @@ func ApiRegisterValidator() {
 	containers.Set(key, home.News{})
 
 	containers.Set(consts.ValidatorPrefix+"UserInfo", user.UserInfo{})
+	containers.Set(consts.ValidatorPrefix+"enterpriseInfo", user.UserInfo{})
 }

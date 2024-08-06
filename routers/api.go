@@ -74,6 +74,8 @@ func InitApiRouter() *gin.Engine {
 		{
 			user.POST("userInfo", validatorFactory.Create(consts.ValidatorPrefix+"UserInfo"))
 		}
+
+		api.Any("enterpriseInfo",validatorFactory.Create(consts.ValidatorPrefix+"enterpriseInfo"))
 	}
 	return router
 }
